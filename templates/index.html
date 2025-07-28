@@ -14,32 +14,64 @@
         .float-animation {
             animation: float 3s ease-in-out infinite;
         }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .feature-card {
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-screen flex items-center justify-center p-6">
     <div class="bg-white/80 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-all duration-300 rounded-3xl p-10 w-full max-w-md border border-white/20">
+        <!-- Header Section with Enhanced Animation -->
         <div class="flex flex-col items-center mb-8">
-            <span class="text-6xl mb-4 float-animation">💰</span>
-            <h1 class="text-3xl font-extrabold text-center bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
+            <div class="relative">
+                <span class="text-6xl mb-4 float-animation inline-block">💰</span>
+                <span class="absolute -top-1 -right-1 text-2xl float-animation" style="animation-delay: 0.5s">✨</span>
+            </div>
+            <h1 class="text-3xl font-extrabold text-center bg-gradient-to-r from-indigo-600 via-purple-500 to-purple-600 bg-clip-text text-transparent mb-3">
                 Generate Yearly Budget Sheet
             </h1>
             <p class="text-gray-600 text-center text-sm mb-2">Create a detailed Excel budget for your family in seconds.</p>
             <div class="w-32 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mt-2"></div>
         </div>
 
+        <!-- Enhanced Form Section -->
         <form action="/generate" method="post" class="space-y-6">
             <div class="relative group">
-                <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Enter Year:</label>
-                <input
-                    type="number"
-                    id="year"
-                    name="year"
-                    required
-                    class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 
-                           focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200
-                           transition-all duration-300 group-hover:border-indigo-300"
-                    placeholder="e.g. 2025"
-                />
+                <label for="year" class="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                    Enter Year 
+                    <span class="text-xs text-indigo-500">(Required)</span>
+                </label>
+                <div class="relative">
+                    <input
+                        type="number"
+                        id="year"
+                        name="year"
+                        required
+                        class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 
+                               focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200
+                               transition-all duration-300 group-hover:border-indigo-300"
+                        placeholder="e.g. 2025"
+                        min="2020"
+                        max="2050"
+                    />
+                    <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">📅</span>
+                </div>
+                <p class="mt-1 text-xs text-gray-500">Enter a year between 2020-2050</p>
             </div>
 
             <button
@@ -57,9 +89,59 @@
             </button>
         </form>
 
-        <!-- Success Message (Initially Hidden) -->
-        <div id="success" class="hidden mt-6 p-4 bg-green-50 rounded-xl border border-green-200">
-            <p class="text-green-700 text-sm text-center">Your budget sheet is being generated! 📊</p>
+        <!-- Enhanced Features Section with Cards -->
+        <div class="mt-8 space-y-4">
+            <div class="flex items-center justify-center gap-2 mb-6">
+                <div class="w-20 h-1 bg-gradient-to-r from-indigo-600 to-transparent rounded-full"></div>
+                <h3 class="text-center text-lg font-semibold text-gray-700">Features</h3>
+                <div class="w-20 h-1 bg-gradient-to-l from-purple-600 to-transparent rounded-full"></div>
+            </div>
+            
+            <div class="grid gap-3">
+                <div class="feature-card flex items-center space-x-3 p-4 bg-white/50 rounded-xl border border-white/50">
+                    <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-indigo-100 rounded-lg">
+                        <span class="text-2xl">📊</span>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-gray-700">Monthly Tracking</h4>
+                        <p class="text-xs text-gray-500">12 Monthly sheets with daily expense tracking</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card flex items-center space-x-3 p-4 bg-white/50 rounded-xl border border-white/50">
+                    <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-purple-100 rounded-lg">
+                        <span class="text-2xl">💵</span>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-gray-700">Income & Expenses</h4>
+                        <p class="text-xs text-gray-500">Track fixed income and regular expenses</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card flex items-center space-x-3 p-4 bg-white/50 rounded-xl border border-white/50">
+                    <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-pink-100 rounded-lg">
+                        <span class="text-2xl">📈</span>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-gray-700">Auto Calculations</h4>
+                        <p class="text-xs text-gray-500">Smart totals & balance calculations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Success Message -->
+        <div id="success" class="hidden mt-6">
+            <div class="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200">
+                <div class="flex items-center gap-3">
+                    <svg class="loading-spinner w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <p class="text-green-700 text-sm font-medium">Generating your budget sheet...</p>
+                </div>
+                <p class="mt-2 text-xs text-green-600">This may take a few seconds</p>
+            </div>
         </div>
     </div>
 
