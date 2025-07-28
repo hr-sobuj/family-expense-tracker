@@ -1,33 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Family Budget Generator</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Family Budget Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-  <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
-    <h1 class="text-2xl font-bold text-center text-indigo-700 mb-6">📊 Generate Yearly Budget Sheet</h1>
-    <form action="/generate" method="post" class="space-y-4">
-      <div>
-        <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Enter Year:</label>
-        <input
-          type="number"
-          id="year"
-          name="year"
-          required
-          class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          placeholder="e.g. 2025"
-        />
-      </div>
-      <button
-        type="submit"
-        class="w-full bg-indigo-600 text-white py-2 rounded-md font-semibold hover:bg-indigo-700 transition"
-      >
-        Generate Excel
-      </button>
-    </form>
-  </div>
+<body class="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-screen flex items-center justify-center p-6">
+    <div class="bg-white/80 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-all duration-300 rounded-3xl p-10 w-full max-w-md border border-white/20">
+        <div class="flex flex-col items-center mb-8">
+            <span class="text-6xl mb-4 float-animation">💰</span>
+            <h1 class="text-3xl font-extrabold text-center bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
+                Generate Yearly Budget Sheet
+            </h1>
+            <p class="text-gray-600 text-center text-sm mb-2">Create a detailed Excel budget for your family in seconds.</p>
+            <div class="w-32 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mt-2"></div>
+        </div>
+
+        <form action="/generate" method="post" class="space-y-6">
+            <div class="relative group">
+                <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Enter Year:</label>
+                <input
+                    type="number"
+                    id="year"
+                    name="year"
+                    required
+                    class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 
+                           focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200
+                           transition-all duration-300 group-hover:border-indigo-300"
+                    placeholder="e.g. 2025"
+                />
+            </div>
+
+            <button
+                type="submit"
+                class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 rounded-xl 
+                       font-bold shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] active:scale-[0.98]
+                       transition-all duration-200 relative overflow-hidden group"
+            >
+                <span class="relative z-10 flex items-center justify-center gap-2">
+                    🚀 Generate Excel
+                    <svg class="w-5 h-5 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </span>
+            </button>
+        </form>
+
+        <!-- Success Message (Initially Hidden) -->
+        <div id="success" class="hidden mt-6 p-4 bg-green-50 rounded-xl border border-green-200">
+            <p class="text-green-700 text-sm text-center">Your budget sheet is being generated! 📊</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        const success = document.getElementById('success');
+        
+        form.addEventListener('submit', () => {
+            success.classList.remove('hidden');
+        });
+    </script>
 </body>
 </html>
